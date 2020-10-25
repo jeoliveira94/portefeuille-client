@@ -4,27 +4,27 @@ import {
   CardContent,
   makeStyles,
   Typography,
-} from "@material-ui/core";
-import React from "react";
+} from '@material-ui/core';
+import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
   card: {
     width: 300,
   },
   avatar: {
-    margin: "auto",
+    margin: 'auto',
     width: 80,
     height: 80,
   },
   name: {
     paddingTop: 20,
     fontSize: 25,
-    textAlign: "center",
+    textAlign: 'center',
   },
   area: {
     paddingTop: 10,
     fontSize: 20,
-    textAlign: "center",
+    textAlign: 'center',
   },
 }));
 
@@ -34,7 +34,11 @@ export default function ProfileCard(props) {
   return (
     <Card className={classes.card}>
       <CardContent>
-        <Avatar className={classes.avatar} alt={props.nome} src={props.image}/>
+        <Avatar
+          className={classes.avatar}
+          alt={props.nome}
+          src={props.imagem}
+        />
         <Typography variant="h1" className={classes.name}>
           {props.nome}
         </Typography>
