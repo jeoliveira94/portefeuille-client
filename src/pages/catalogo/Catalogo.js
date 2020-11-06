@@ -1,20 +1,22 @@
-import { makeStyles, Typography } from "@material-ui/core";
-import React, { useState } from "react";
-import ProfileCard from "./ProfileCard";
+import { makeStyles, Typography } from '@material-ui/core';
+import React, { useState, useEffect, useCallback } from 'react';
+import ProfileCard from './ProfileCard';
+import { useAluno } from '../../services/aluno-services';
+import axios from 'axios';
 
 const useStyles = makeStyles(() => ({
   root: {},
   title: {
-    marginTop: "2%",
-    marginLeft: "10%",
+    marginTop: '2%',
+    marginLeft: '10%',
   },
   grid: {
-    marginTop: "2%",
-    marginLeft: "10%",
-    marginRight: "10%",
-    display: "flex",
-    justifyContent: "space-around",
-    paddingBottom: "50%",
+    marginTop: '2%',
+    marginLeft: '10%',
+    marginRight: '10%',
+    display: 'flex',
+    justifyContent: 'space-around',
+    paddingBottom: '50%',
   },
   item: {
     flex: 1,
@@ -22,10 +24,30 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+const getAlunos = async () => {
+  const options = {
+    url: 'http://localhost:8080/api/v1/alunos',
+    method: 'GET',
+    headers: {
+      'Access-Control-Allow-Credentials': true,
+    },
+  };
+  const response = await axios(options);
+  const alunos = response.data;
+  console.log(alunos);
+  return alunos;
+};
+
 export default function Catalogo() {
   const classes = useStyles();
 
   // vai pegar os usuarios do controlador
+
+  const [alunos, setAlunos] = useState([]);
+
+  useEffect(() => {
+    getAlunos().then((alunos) => setAlunos(alunos));
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -33,24 +55,14 @@ export default function Catalogo() {
         Alunos cadastrados:
       </Typography>
       <div className={classes.grid}>
-        <ProfileCard
-          nome="Eduardo 'Ruemmai' Oliveira"
-          area="Back-end"
-          imagem="https://avatars3.githubusercontent.com/u/26828695?s=400&u=5f0b619d8f68858f574e2d7b84b2f7341f21abb7&v=4"
-          className={classes.item}
-        />
-        <ProfileCard
-          nome="Weverton 'Vvt' Trindade"
-          area="Front-end"
-          imagem="https://avatars1.githubusercontent.com/u/19598108?s=400&u=21e4d50f0c7de9b1a6a440f6387d455db94de930&v=4"
-          className={classes.item}
-        />
-        <ProfileCard
-          nome="Pedro 'Psy' Carvalho"
-          area="Banco de Dados"
-          imagem="https://avatars2.githubusercontent.com/u/17572104?s=400&u=07e2c9d2ec2b666fe21c05515abf961113b605b1&v=4"
-          className={classes.item}
-        />
+        {alunos.map((aluno) => (
+          <ProfileCard
+            nome={aluno.nome}
+            area={aluno.area}
+            imagem=""
+            className={classes.item}
+          ></ProfileCard>
+        ))}
       </div>
     </div>
   );
