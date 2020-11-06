@@ -1,10 +1,4 @@
-import {
-  Card,
-  InputBase,
-  makeStyles,
-  Typography,
-  TextField,
-} from '@material-ui/core';
+import { Card, makeStyles, Typography, TextField } from '@material-ui/core';
 import React from 'react';
 
 const useStyles = makeStyles(() => ({
