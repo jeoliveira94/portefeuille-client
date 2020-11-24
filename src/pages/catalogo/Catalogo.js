@@ -1,7 +1,6 @@
 import { makeStyles, Typography } from '@material-ui/core';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProfileCard from './ProfileCard';
-import { useAluno } from '../../services/aluno-services';
 import axios from 'axios';
 
 const useStyles = makeStyles(() => ({
