@@ -5,11 +5,9 @@ import {
   Typography,
   TextField,
   CardActions,
-  makeStyles,
   withStyles,
 } from "@material-ui/core";
-import React, { useState, Component } from "react";
-import { create } from "../../api/User";
+import React, { Component } from "react";
 
 const useStyles = (theme) => ({
   root: {
@@ -44,25 +42,23 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      values: {
-        email: "",
-        password: "",
-        error: "",
-        redirectToReferrer: false,
-      },
+      matricula: "",
+      password: "",
+      error: "",
+      redirectToReferrer: false,
     };
   }
 
   handleChange(fieldName) {
     return (event) => {
-      this.setState({ ...this.state.values, [fieldName]: event.target.value });
+      this.setState({ ...this.state, [fieldName]: event.target.value });
     };
   }
 
   handleSubmit() {
     // user = {
-    //   email: this.state.values.name,
-    //   password: this.state.values.password,
+    //   email: this.state.name,
+    //   password: this.state.password,
     // };
     // create();
   }
@@ -79,11 +75,11 @@ class Login extends Component {
             </Typography>
             <form>
               <TextField
-                id="email"
-                label="Email"
+                id="matricula"
+                label="Matrícula"
                 className={classes.textField}
-                value={this.state.values.email}
-                onChange={this.handleChange("email")}
+                value={this.state.matricula}
+                onChange={this.handleChange("matricula")}
                 margin="normal"
                 autoComplete="off"
               />
@@ -93,7 +89,7 @@ class Login extends Component {
                 label="Senha"
                 type="password"
                 className={classes.textField}
-                value={this.state.values.password}
+                value={this.state.password}
                 onChange={this.handleChange("password")}
                 margin="normal"
               />
