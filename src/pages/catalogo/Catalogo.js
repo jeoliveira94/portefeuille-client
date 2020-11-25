@@ -1,9 +1,10 @@
-import { makeStyles, Typography } from '@material-ui/core';
-import React, { useState, useEffect } from 'react';
-import ProfileCard from './ProfileCard';
+import { Typography, withStyles } from "@material-ui/core";
+import React, { useState, Component } from "react";
+import ProfileCard from "./ProfileCard";
+import { list } from "../../api/User";
 import axios from 'axios';
 
-const useStyles = makeStyles(() => ({
+const useStyles = () => ({
   root: {},
   title: {
     marginTop: '2%',
@@ -21,7 +22,7 @@ const useStyles = makeStyles(() => ({
     flex: 1,
     paddingLeft: 5,
   },
-}));
+});
 
 const getAlunos = async () => {
   const options = {
@@ -39,8 +40,21 @@ const getAlunos = async () => {
 
 export default function Catalogo() {
   const classes = useStyles();
+class Catalogo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  componentDidMount() {
+    try {
+      console.log(list());
+    } catch {}
+  }
 
   // vai pegar os usuarios do controlador
+  render() {
+    const { classes } = this.props;
 
   const [alunos, setAlunos] = useState([]);
 
@@ -63,6 +77,8 @@ export default function Catalogo() {
           ></ProfileCard>
         ))}
       </div>
-    </div>
-  );
+    );
+  }
 }
+
+export default withStyles(useStyles)(Catalogo);
