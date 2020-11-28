@@ -18,7 +18,7 @@ import { create } from "../../api/User";
 
 const useStyles = (theme) => ({
   root: {
-    paddingBottom: "20%",
+    paddingBottom: "10%",
   },
   card: {
     maxWidth: 600,
