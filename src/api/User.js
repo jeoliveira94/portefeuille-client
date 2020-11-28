@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const apiUrl = "localhost:8080/api/v1/alunos";
+const apiUrl = "http://localhost:8080/api/v1/alunos/";
 
 async function create(aluno) {
   const options = {
@@ -15,16 +15,28 @@ async function create(aluno) {
 
 async function list() {
   const options = {
-    url: apiUrl,
-    method: "GET",
     headers: {
       "Access-Control-Allow-Credentials": true,
     },
   };
-  const response = await Axios(options);
+
+  const response = await Axios.get(apiUrl, options);
   const alunos = response.data;
   console.log(alunos);
   return alunos;
 }
 
-export { create, list };
+async function read(matricula) {
+  const options = {
+    headers: {
+      "Access-Control-Allow-Credentials": true,
+    },
+  };
+
+  const response = await Axios.get(apiUrl + matricula, options);
+  const aluno = response.data;
+  console.log(aluno);
+  return aluno;
+}
+
+export { create, list, read };
