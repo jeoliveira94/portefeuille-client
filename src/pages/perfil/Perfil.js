@@ -16,6 +16,7 @@ import {
 } from "@material-ui/core";
 
 import { read } from "../../api/User";
+import { listByAluno } from "../../api/Projetos";
 
 const useStyles = makeStyles((theme) => ({
   root: theme.mixins.gutters({
@@ -29,9 +30,18 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     color: theme.palette.openTitle,
   },
+  profileImage: {
+    height: 100,
+    width: 100,
+    margin: "auto",
+  },
   button: {
     marginTop: theme.spacing(2),
     textDecoration: "none",
+  },
+  link: {
+    textDecoration: "none",
+    color: "#000000",
   },
 }));
 
@@ -39,32 +49,48 @@ export default function Profile({ match }) {
   const classes = useStyles();
 
   // estados
-  const [user, setUser] = useState({});
+  const [aluno, setAluno] = useState({});
+  const [projetos, setProjetos] = useState([
+    { nome: "carregando", coordenador: "carregando" },
+  ]);
 
   useEffect(() => {
     read(match.params.matricula).then((data) => {
-      setUser(data);
+      setAluno(data);
+    });
+    listByAluno(match.params.matricula).then((data) => {
+      setProjetos(data);
     });
   }, [match.params.matricula]);
 
   return (
     <Paper className={classes.root} elevation={4}>
-      <Typography variant="h6" className={classes.title}>
-        Perfil
+      <div style={{ marginTop: "50px", marginBottom: "50px" }}>
+        <Avatar className={classes.profileImage} />
+        <Typography variant="h6" className={classes.title}>
+          {aluno.nome}
+        </Typography>
+      </div>
+      <Typography variant="h7" style={{ marginLeft: 0 }}>
+        Projetos do Aluno
       </Typography>
       <List dense>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar />
-          </ListItemAvatar>
-          <ListItemText primary={user.nome} secondary={user.matricula} />
-        </ListItem>
         <Divider />
-        <ListItem>
-          <ListItemText
-            primary={"Juntou-se em: " + new Date(user.created).toDateString()}
-          />
-        </ListItem>
+        {projetos.map((projeto, i) => {
+          return (
+            <div>
+              <Link to={"/projeto/" + projeto.id} className={classes.link}>
+                <ListItem>
+                  <ListItemText
+                    primary={projeto.nome}
+                    secondary={"Coordenador: " + projeto.coordenadorMatricula}
+                  />{" "}
+                </ListItem>
+              </Link>
+              <Divider />
+            </div>
+          );
+        })}
       </List>
     </Paper>
   );
