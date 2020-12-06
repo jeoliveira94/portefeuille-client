@@ -91,24 +91,36 @@ function Cadastro(props) {
         nome: "Insira um nome de usuário com ao menos 3 caracteres.",
         nomeError: true,
       });
+      return;
     } else if (!aluno.matricula || isNaN(aluno.matricula)) {
       setErrorText({
         ...errorText,
         matricula: "Insira um número de matrícula válido.",
         matriculaError: true,
       });
-    } else if (!aluno.senha || aluno.matricula.length <= 6) {
+      return;
+    } else if (!aluno.senha || aluno.senha.length <= 6) {
       setErrorText({
         ...errorText,
         senha: "Insira uma senha com ao menos 6 caracteres.",
         senhaError: true,
       });
+      return;
     } else {
       create(aluno).then((resposta) => {
         console.log(resposta);
         setOpen(true);
       });
     }
+
+    setErrorText({
+      nome: "",
+      matricula: "",
+      senha: "",
+      nomeError: false,
+      matriculaError: false,
+      senhaError: false,
+    });
   };
 
   return (
@@ -128,7 +140,7 @@ function Cadastro(props) {
               margin="normal"
               autoComplete="off"
               error={errorText.nomeError}
-              helperError={errorText.nome}
+              helperText={errorText.nome}
             />
             <br />
             <TextField
@@ -139,7 +151,7 @@ function Cadastro(props) {
               onChange={handleChange("matricula")}
               margin="normal"
               error={errorText.matriculaError}
-              helperError={errorText.matricula}
+              helperText={errorText.matricula}
             />
             <br />
             <TextField
@@ -151,7 +163,7 @@ function Cadastro(props) {
               margin="normal"
               type="password"
               error={errorText.senhaError}
-              helperError={errorText.senha}
+              helperText={errorText.senha}
             />
             <br />
             <TextField
@@ -205,7 +217,7 @@ function Cadastro(props) {
           <DialogContentText>Nova conta criada com sucesso!</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Link to="/signin">
+          <Link to="/acesso">
             <Button color="primary" autoFocus="autoFocus" variant="contained">
               Entrar
             </Button>
