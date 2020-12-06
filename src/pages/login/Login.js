@@ -8,6 +8,8 @@ import {
   withStyles,
 } from "@material-ui/core";
 import React, { Component } from "react";
+import { Redirect } from "react-router";
+import { signin } from "../../api/User";
 
 const useStyles = (theme) => ({
   root: {
@@ -38,78 +40,84 @@ const useStyles = (theme) => ({
   },
 });
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      matricula: "",
-      password: "",
-      error: "",
-      redirectToReferrer: false,
-    };
-  }
+function Login(props) {
+  const { classes } = props;
 
-  handleChange(fieldName) {
+  const [values, setValues] = React.useState({
+    matricula: "",
+    senha: "",
+    error: "",
+    redirectToReferrer: false,
+  });
+
+  const handleChange = (fieldName) => {
     return (event) => {
-      this.setState({ ...this.state, [fieldName]: event.target.value });
+      setValues({ ...values, [fieldName]: event.target.value });
     };
-  }
+  };
 
-  handleSubmit() {
-    // user = {
-    //   email: this.state.name,
-    //   password: this.state.password,
-    // };
-    // create();
-  }
+  const clickSubmit = () => {
+    const user = {
+      matricula: values.matricula || undefined,
+      senha: values.senha || undefined,
+    };
+    console.log("aq");
+    signin(user).then((data) => {
+      setValues({ ...values, error: "", redirectToReferrer: true });
+    });
+  };
 
-  render() {
-    const { classes } = this.props;
+  const { from } = {
+    from: { pathname: "/" },
+  };
 
-    return (
-      <div className={classes.root}>
-        <Card className={classes.card}>
-          <CardContent>
-            <Typography variant="h6" className={classes.title}>
-              Entrar
-            </Typography>
-            <form>
-              <TextField
-                id="matricula"
-                label="Matrícula"
-                className={classes.textField}
-                value={this.state.matricula}
-                onChange={this.handleChange("matricula")}
-                margin="normal"
-                autoComplete="off"
-              />
-              <br />
-              <TextField
-                id="senha"
-                label="Senha"
-                type="password"
-                className={classes.textField}
-                value={this.state.password}
-                onChange={this.handleChange("password")}
-                margin="normal"
-              />
-            </form>
+  const { redirectToReferrer } = values;
+
+  if (redirectToReferrer) return <Redirect to={from} />;
+
+  return (
+    <div className={classes.root}>
+      <Card className={classes.card}>
+        <CardContent>
+          <Typography variant="h6" className={classes.title}>
+            Entrar
+          </Typography>
+          <form>
+            <TextField
+              id="matricula"
+              label="Matrícula"
+              className={classes.textField}
+              value={values.matricula}
+              onChange={handleChange("matricula")}
+              margin="normal"
+              autoComplete="off"
+            />
             <br />
-          </CardContent>
-          <CardActions>
-            <Button
-              color="primary"
-              variant="contained"
-              className={classes.submit}
-              onClick={this.handleSubmit()}
-            >
-              Confirmar
-            </Button>
-          </CardActions>
-        </Card>
-      </div>
-    );
-  }
+            <TextField
+              id="senha"
+              label="Senha"
+              type="senha"
+              className={classes.textField}
+              value={values.senha}
+              onChange={handleChange("senha")}
+              margin="normal"
+            />
+          </form>
+          <br />
+        </CardContent>
+        <CardActions>
+          <Button
+            color="primary"
+            variant="contained"
+            className={classes.submit}
+            onClick={clickSubmit}
+          >
+            Confirmar
+          </Button>
+        </CardActions>
+      </Card>
+    </div>
+  );
 }
 
 export default withStyles(useStyles, { withTheme: true })(Login);
