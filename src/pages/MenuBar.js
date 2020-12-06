@@ -9,7 +9,8 @@ import {
   withStyles,
 } from "@material-ui/core";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { isAuthenticated, getAuthenticated, signout } from "../api/User";
 
 const useStyles = (theme) => ({
   root: {
@@ -53,6 +54,11 @@ const useStyles = (theme) => ({
 
 function MenuBar(props) {
   const { classes } = props;
+
+  const [redirecionar, setRedirecionar] = React.useState(false);
+
+  if (redirecionar) return <Redirect to="/" />;
+
   return (
     <AppBar className={classes.root} position="static">
       <Toolbar className={classes.content}>
@@ -60,7 +66,7 @@ function MenuBar(props) {
           <Typography variant="h6">Portefeuille</Typography>
         </Link>
         <div className={classes.links}>
-          {
+          {!isAuthenticated() && (
             <span>
               <Link to="/cadastro" className={classes.links}>
                 <Button className={classes.title}>Cadastrar</Button>
@@ -69,11 +75,13 @@ function MenuBar(props) {
                 <Button className={classes.title}>Acessar</Button>
               </Link>
             </span>
-          }
-          {/*auth.isAuthenticated() && (
+          )}
+          {isAuthenticated() && (
             <span>
               <Link
-                to={`/user/${auth.isAuthenticated().user._id}`}
+                to={`/aluno/${
+                  JSON.parse(sessionStorage.getItem("autenticado")).matricula
+                }`}
                 className={classes.links}
               >
                 <Button className={classes.title}>Meu Perfil</Button>
@@ -81,13 +89,14 @@ function MenuBar(props) {
               <Button
                 className={classes.title}
                 onClick={() => {
-                  auth.clearJWT(() => history.push("/"));
+                  signout();
+                  setRedirecionar(true);
                 }}
               >
                 Sair
               </Button>
             </span>
-              )*/}
+          )}
         </div>
       </Toolbar>
     </AppBar>

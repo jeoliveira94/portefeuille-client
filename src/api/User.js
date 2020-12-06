@@ -22,7 +22,7 @@ async function list() {
 
   const response = await Axios.get(apiUrl, options);
   const alunos = response.data;
-  console.log(alunos);
+
   return alunos;
 }
 
@@ -39,4 +39,33 @@ async function read(matricula) {
   return aluno;
 }
 
-export { create, list, read };
+async function signin(aluno) {
+  const options = {
+    headers: {
+      "Access-Control-Allow-Credentials": true,
+    },
+  };
+  const response = await Axios.post(apiUrl + "autenticar", aluno, options);
+
+  sessionStorage.setItem("autenticado", JSON.stringify(aluno));
+
+  console.log(sessionStorage.getItem("autenticado"));
+
+  return response.data;
+}
+
+function signout() {
+  console.log("removendo");
+  sessionStorage.removeItem("autenticado");
+  console.log(isAuthenticated());
+}
+
+function isAuthenticated() {
+  if (JSON.parse(sessionStorage.getItem("autenticado")) !== null) {
+    console.log(JSON.parse(sessionStorage.getItem("autenticado")).matricula);
+    return true;
+  }
+  return false;
+}
+
+export { create, list, read, signin, isAuthenticated, signout };
