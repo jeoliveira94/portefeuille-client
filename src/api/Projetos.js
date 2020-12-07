@@ -13,6 +13,19 @@ async function create(projeto) {
   return resposta;
 }
 
+async function read(id) {
+  const options = {
+    headers: {
+      "Access-Control-Allow-Credentials": true,
+    },
+  };
+
+  const response = await Axios.get(apiUrl + id, options);
+  const projeto = response.data;
+  console.log(projeto);
+  return projeto;
+}
+
 async function list() {
   const options = {
     headers: {
@@ -40,4 +53,4 @@ const listByAluno = async (matricula) => {
   return projeto;
 };
 
-export default { create, listByAluno, list };
+export default { create, read, listByAluno, list };
