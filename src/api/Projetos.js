@@ -53,4 +53,18 @@ const listByAluno = async (matricula) => {
   return projeto;
 };
 
-export default { create, read, listByAluno, list };
+const listByCoordenador = async (matricula) => {
+  const url = apiUrl + "coordenador/" + matricula;
+  const options = {
+    headers: {
+      "Access-Control-Allow-Credentials": true,
+    },
+  };
+
+  const response = await Axios.get(url, options);
+
+  const projeto = response.data;
+  return projeto;
+};
+
+export default { create, read, listByAluno, listByCoordenador, list };
