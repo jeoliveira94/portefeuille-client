@@ -68,4 +68,4 @@ function isAuthenticated() {
   return false;
 }
 
-export { create, list, read, signin, isAuthenticated, signout };
+export default { create, list, read, signin, isAuthenticated, signout };

@@ -14,7 +14,7 @@ import {
   DialogContentText,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { create } from "../../api/User";
+import alunos from "../../api/User";
 
 const useStyles = (theme) => ({
   root: {
@@ -107,7 +107,7 @@ function Cadastro(props) {
       });
       return;
     } else {
-      create(aluno).then((resposta) => {
+      alunos.create(aluno).then((resposta) => {
         console.log(resposta);
         setOpen(true);
       });

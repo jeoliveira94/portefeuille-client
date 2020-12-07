@@ -15,8 +15,8 @@ import {
   Button,
 } from "@material-ui/core";
 
-import { read } from "../../api/User";
-import { listByAluno } from "../../api/Projetos";
+import alunos from "../../api/User";
+import projetos from "../../api/Projetos";
 
 const useStyles = makeStyles((theme) => ({
   root: theme.mixins.gutters({
@@ -50,16 +50,16 @@ export default function Profile({ match }) {
 
   // estados
   const [aluno, setAluno] = useState({});
-  const [projetos, setProjetos] = useState([
+  const [projetoList, setProjetoList] = useState([
     { nome: "carregando", coordenador: "carregando" },
   ]);
 
   useEffect(() => {
-    read(match.params.matricula).then((data) => {
+    alunos.read(match.params.matricula).then((data) => {
       setAluno(data);
     });
-    listByAluno(match.params.matricula).then((data) => {
-      setProjetos(data);
+    projetos.listByAluno(match.params.matricula).then((data) => {
+      setProjetoList(data);
     });
   }, [match.params.matricula]);
 
@@ -76,7 +76,7 @@ export default function Profile({ match }) {
       </Typography>
       <List dense>
         <Divider />
-        {projetos.map((projeto, i) => {
+        {projetoList.map((projeto, i) => {
           return (
             <div>
               <Link to={"/projeto/" + projeto.id} className={classes.link}>

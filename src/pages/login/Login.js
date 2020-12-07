@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import React, { Component } from "react";
 import { Redirect } from "react-router";
-import { signin } from "../../api/User";
+import alunos from "../../api/User";
 
 const useStyles = (theme) => ({
   root: {
@@ -62,7 +62,7 @@ function Login(props) {
       senha: values.senha || undefined,
     };
     console.log("aq");
-    signin(user).then((data) => {
+    alunos.signin(user).then((data) => {
       setValues({ ...values, error: "", redirectToReferrer: true });
     });
   };

@@ -26,7 +26,7 @@ async function list() {
   return projetos;
 }
 
-async function listByAluno(matricula) {
+const listByAluno = async (matricula) => {
   const url = apiUrl + "aluno/" + matricula;
   const options = {
     headers: {
@@ -38,6 +38,6 @@ async function listByAluno(matricula) {
 
   const projeto = response.data;
   return projeto;
-}
+};
 
-export { create, listByAluno };
+export default { create, listByAluno, list };

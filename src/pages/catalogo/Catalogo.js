@@ -1,7 +1,10 @@
 import { Typography, withStyles } from "@material-ui/core";
 import React, { Component } from "react";
 import ProfileCard from "./ProfileCard";
-import { list } from "../../api/User";
+import ProjectCard from "./ProjectCard";
+import alunos from "../../api/User";
+import projetos from "../../api/Projetos";
+import { Link } from "react-router-dom";
 
 const useStyles = () => ({
   root: {},

@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { Link, Redirect } from "react-router-dom";
-import { isAuthenticated, getAuthenticated, signout } from "../api/User";
+import alunos from "../api/User";
 
 const useStyles = (theme) => ({
   root: {
@@ -66,7 +66,7 @@ function MenuBar(props) {
           <Typography variant="h6">Portefeuille</Typography>
         </Link>
         <div className={classes.links}>
-          {!isAuthenticated() && (
+          {!alunos.isAuthenticated() && (
             <span>
               <Link to="/cadastro" className={classes.links}>
                 <Button className={classes.title}>Cadastrar</Button>
@@ -76,8 +76,11 @@ function MenuBar(props) {
               </Link>
             </span>
           )}
-          {isAuthenticated() && (
+          {alunos.isAuthenticated() && (
             <span>
+              <Link to={`/cadastro/projeto`} className={classes.links}>
+                <Button className={classes.title}>Novo Projeto</Button>
+              </Link>
               <Link
                 to={`/aluno/${
                   JSON.parse(sessionStorage.getItem("autenticado")).matricula
@@ -89,7 +92,7 @@ function MenuBar(props) {
               <Button
                 className={classes.title}
                 onClick={() => {
-                  signout();
+                  alunos.signout();
                   setRedirecionar(true);
                 }}
               >
