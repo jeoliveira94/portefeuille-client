@@ -71,7 +71,7 @@ export default function Profile({ match }) {
           {aluno.nome}
         </Typography>
       </div>
-      <Typography variant="h7" style={{ marginLeft: 0 }}>
+      <Typography variant="subtitle2" style={{ marginLeft: 0 }}>
         Projetos do Aluno
       </Typography>
       <List dense>
