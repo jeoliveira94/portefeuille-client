@@ -63,6 +63,14 @@ export default function Profile({ match }) {
     });
   }, [match.params.matricula]);
 
+  const checkAuth = () => {
+    return (
+      alunos.isAuthenticated() &&
+      JSON.parse(sessionStorage.getItem("autenticado")).matricula ==
+        aluno.matricula
+    );
+  };
+
   return (
     <Paper className={classes.root} elevation={4}>
       <div style={{ marginTop: "50px", marginBottom: "50px" }}>
@@ -92,6 +100,11 @@ export default function Profile({ match }) {
           );
         })}
       </List>
+      {checkAuth() && (
+        <Button variant="contained" color="secondary" onClick={() => {}}>
+          APAGAR CONTA
+        </Button>
+      )}
     </Paper>
   );
 }
