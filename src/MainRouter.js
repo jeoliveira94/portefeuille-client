@@ -7,6 +7,7 @@ import MenuBar from "./pages/MenuBar";
 import Login from "./pages/login/Login";
 import Perfil from "./pages/perfil/Perfil";
 import Projeto from "./pages/perfil/ProjetoPerfil";
+import Coordenador from "./pages/perfil/CoordenadorPerfil";
 
 export default function MainRouter() {
   return (
@@ -18,6 +19,7 @@ export default function MainRouter() {
         <Route exact path="/" component={Catalogo} />
         <Route path="/acesso" component={Login} />
         <Route path="/aluno/:matricula" component={Perfil} />
+        <Route path="/coordenador/:matricula" component={Coordenador} />
         <Route path="/projeto/:id" component={Projeto} />
       </Switch>
     </div>
