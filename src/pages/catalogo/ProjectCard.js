@@ -34,11 +34,6 @@ export default function ProfileCard(props) {
   return (
     <Card className={classes.card}>
       <CardContent>
-        <Avatar
-          className={classes.avatar}
-          alt={props.nome}
-          src={props.imagem}
-        />
         <Typography variant="h1" className={classes.name}>
           {props.nome}
         </Typography>

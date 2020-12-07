@@ -18,7 +18,7 @@ const useStyles = () => ({
     marginRight: "10%",
     display: "flex",
     justifyContent: "space-around",
-    paddingBottom: "50%",
+    paddingBottom: "10%",
   },
   item: {
     flex: 1,
@@ -31,11 +31,17 @@ class Catalogo extends Component {
     super(props);
     this.state = {
       alunos: [],
+      projetos: [],
     };
   }
 
   componentDidMount() {
-    list().then((alunos) => this.setState({ alunos: alunos }));
+    alunos
+      .list()
+      .then((data) => this.setState({ ...this.state, alunos: data }));
+    projetos
+      .list()
+      .then((data) => this.setState({ ...this.state, projetos: data }));
   }
 
   // vai pegar os usuarios do controlador
@@ -49,12 +55,35 @@ class Catalogo extends Component {
         </Typography>
         <div className={classes.grid}>
           {this.state.alunos.map((aluno) => (
-            <ProfileCard
-              nome={aluno.nome}
-              area={aluno.area}
-              imagem=""
-              className={classes.item}
-            />
+            <Link
+              to={`aluno/${aluno.matricula}`}
+              style={{ textDecoration: "none" }}
+            >
+              <ProfileCard
+                nome={aluno.nome}
+                area={aluno.area}
+                imagem=""
+                className={classes.item}
+              />
+            </Link>
+          ))}
+        </div>
+        <Typography variant="h6" className={classes.title}>
+          Projetos cadastrados:
+        </Typography>
+        <div className={classes.grid}>
+          {this.state.projetos.map((projeto) => (
+            <Link
+              to={`projeto/${projeto.id}`}
+              style={{ textDecoration: "none" }}
+            >
+              <ProjectCard
+                nome={projeto.nome}
+                area={projeto.descricao}
+                imagem=""
+                className={classes.item}
+              />
+            </Link>
           ))}
         </div>
       </div>
